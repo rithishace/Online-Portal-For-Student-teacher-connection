@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+
+{% extends 'base.html' %}
+{% block content %}
+    {%if user.is_authenticated%}
+    <h2>Upload</h2>
+   <form method="POST" enctype="multipart/form-data">
+       {%csrf_token%}
+
+       <input type="File" name="document" >
+       <button type="submit">Upload File</button>
+    </form>
+    {% if url%}
+    <p>Uploaded File:<a href="{{url}}">{{url}}</a></p>
+    {% endif%}
+   {%else%}
+    <p>Please Login TO access this page</p>
+    <li><a href="{% url 'home'%}" class="btn btn-outline-secondary">Home</a></li>
+   {%endif%}
+{% endblock %}

@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{% block content%}
+{% if user.is_authenticated%}
+<br>
+    <h2>VIEW ASSIGNMENT SOLUTION</h2>
+<br>
+    <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="card"style="background-color:transparent">
+                    <div class="card-body">
+                        <h4> Enter Assignment Code to Get Solutions</h4>
+
+                         <form method="POST" enctype="multipart/form-data">
+                            {%csrf_token%}
+
+                            {{form|crispy}}
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                     </div>
+                </div>
+            </div>
+       </div>
+	<br>
+    <h2>UPLOADED SOLUTIONS</h2>
+
+     <table class="table ">
+         <thead>
+             <tr>
+                 <th>Student Name</th>
+                 <th>Grade</th>
+                 <th>Section</th>
+                 <th>Admission Number</th>
+                 <th>Content</th>
+                  <th>Delete</th>
+             </tr>
+         </thead>
+         <tbody>
+             {%for book in pr %}
+             <tr>
+                 <td>{{book.Name}}</td>
+                 <td>{{book.Grade}}</td>
+                 <td>{{book.Section}}</td>
+                 <td>{{book.Admission_Number}}</td>
+                 <td>
+                     {%if book.Content%}
+                    <a href= "{{ book.Content.url }}" class="btn btn-primary btn-sm" target="_blank">Download File</a>
+
+                 </td>
+                 <td>
+                    <form method="post" action="{% url 'DeleteSolution' book.pk %}">
+                         {%csrf_token%}
+                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                     </form>
+                 </td>
+                 {% endif%}
+             </tr>
+             {%endfor%}
+         </tbody>
+     </table>
+{%else%}
+    <p>Please LOGIN to access this page</p>
+    <a href="{% url 'home'%}" class="btn btn-outline-secondary">Home</a>
+{%endif%}
+{%endblock%}

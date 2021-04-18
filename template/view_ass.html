@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{% block content%}
+<br>
+     <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="card"style="background-color:transparent">
+                    <div class="card-body">
+                         <form method="POST" enctype="multipart/form-data">
+                            {%csrf_token%}
+                            <h2>ASSIGNMENT</h2>
+                            {{form|crispy}}
+                            <button type="submit" class="btn btn-primary">GET ASSIGNMENT</button>
+                        </form>
+                     </div>
+                </div>
+            </div>
+       </div>
+	<br>
+     <div class="row justify-content-center" >
+         <div class="col-6">
+            <h2>ASSIGNMENT DETAILS</h2>
+            {%for p in s %}
+            <p> GRADE:  {{p.Grade}}       </p>
+            <p> SUBJECT:  {{p.Subject_Name}}    </p>
+            <p> DESCRIPTION: {{p.Description}}  </p>
+            <p> ASSIGNMENT FILE: <a href= "{{ p.Content.url }}" class="btn btn-primary btn-sm" target="_blank">Download File</a> </p>
+
+
+            <a href="{%url 'solution' %}" class="btn btn-primary m1-2">Upload Solution </a>
+            {%endfor%}
+            </div>
+
+     </div>
+
+{%endblock%}

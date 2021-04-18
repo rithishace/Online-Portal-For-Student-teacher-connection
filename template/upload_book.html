@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{% block content%}
+ {% if user.is_authenticated%}
+ <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="card"style="background-color:transparent">
+                    <div class="card-body">
+                         <form method="POST" enctype="multipart/form-data">
+                            {%csrf_token%}
+                            <h2>Upload Study Material</h2>
+                            {{form|crispy}}
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </form>
+                     </div>
+                </div>
+            </div>
+       </div>
+
+{%else%}
+    <p>Please LOGIN to access this page</p>
+    <a href="{% url 'home'%}" class="btn btn-outline-secondary">Home</a>
+{%endif%}
+{%endblock%}

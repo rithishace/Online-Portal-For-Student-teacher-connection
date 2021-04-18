@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %} 
+{% block content%}
+<br>
+     <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="card" style="background-color:transparent" >
+                    <div class="card-body">
+                         <form method="POST" enctype="multipart/form-data">
+                            {%csrf_token%}
+                            <h2>STUDY MATERIAL</h2>
+                            {{form|crispy}}
+                            <button type="submit" class="btn btn-primary">GET MATERIALS</button>
+                        </form>
+                     </div>
+                </div>
+            </div>
+       </div>
+	   
+	 <br>
+     <table class="table ">
+         <thead>
+             <tr>
+                 <th>Subject Name</th>
+                 <th>Class</th>
+                 <th>Teacher Name</th>
+                 <th>Description</th>
+                 <th>Content</th>
+
+
+             </tr>
+         </thead>
+         <tbody>
+             {%for s in sc %}
+             <tr>
+                 <td>{{s.Subject_Name}}</td>
+                 <td>{{s.Class}}</td>
+                 <td>{{s.Teacher_Name}}</td>
+                 <td>{{s.Description}}</td>
+                 <td>
+                    <a href= "{{ s.Content.url }}" class="btn btn-primary btn-sm" target="_blank">Download File</a>
+                 </td>
+
+             </tr>
+             {%endfor%}
+         </tbody>
+     </table>
+
+{%endblock%}

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+
+
+             <div class="col-md-6 offset-md-3">
+                <div class="text-center">
+				<br>
+                 <div class="card" style="background-color:transparent">  
+					<div class="card-body">
+                        {% if user.is_authenticated%}
+                        
+						<h1>TUTOR'S PORTAL</h1>
+						
+                        <br><br><b>Click here to upload Study Material </b>
+                        <br><a href="{% url 'upload'%}" class="btn btn-primary m1-2">UPLOAD-STUDY MATERIAL</a>
+                        <br><br><b>Click here to upload Assignment </b>
+                        <br><a href="{% url 'assignment'%}" class="btn btn-primary m1-2">UPLOAD-ASSIGNMENT</a>
+                        <br><br><b>Click here to view solutions given by students for Assignment </b>
+                        <br><a href="{% url 'ViewSolution'%}" class="btn btn-primary m1-2">VIEW-UPLOADED SOLUTIONS</a>
+                         {%else%}
+                         <h1>ONLINE PORTAL</h1> <br>
+                         <b>KVCRPF AVADI Online Student-Teacher Interface</b>  <br>
+                        <br><b>Tutors Login here</b>
+                        <br><a href="{%url 'login'%}" class="btn btn-primary">Teacher Login</a>
+
+                        <br><br><b>For Student accessing Study Materials and Assignments</b>
+                        <br><a href="{%url 'shome'%}"class="btn btn-primary ">Student Desk</a>
+                        {%endif%}
+				</div>
+                </div>
+            </div>
+		</div>
+		<div class="footer">
+            <label>Created by:Rithish Kumar and Manoj    </label>|
+            <label><a href="#"class=" ">About</a></label>|
+			<label>Guided by:Mr.Magesh Kumar</label>
+
+        </div>
+            
+    
+   
+{% endblock %}

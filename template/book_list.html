@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+{% extends 'base.html'%}
+
+{% block content%}
+{% if user.is_authenticated%}
+    <h2>UPLOADED STUDY MATERIAL</h2>
+    <p><a href="{% url 'upfile'%}" class="btn btn-primary">Upload Material</a></p>
+     <table class="table ">
+         <thead>
+             <tr>
+                 <th>Subject Name</th>
+                 <th>Class</th>
+                 <th>Teacher Name</th>
+                 <th>Description</th>
+                 <th>Content</th>
+                 <th>Delete</th>
+
+             </tr>
+         </thead>
+         <tbody>
+             {%for book in books %}
+             <tr>
+                 <td>{{book.Subject_Name}}</td>
+                 <td>{{book.Class}}</td>
+                 <td>{{book.Teacher_Name}}</td>
+                 <td>{{book.Description}}</td>
+                 <td>
+                    <a href= "{{ book.Content.url }}" class="btn btn-primary btn-sm" target="_blank">Download File</a>
+                 </td>
+                 <td>
+                     <form method="post" action="{% url 'delete' book.pk %}">
+                         {%csrf_token%}
+                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                     </form>
+                 </td>
+             </tr>
+             {%endfor%}
+         </tbody>
+     </table>
+{%else%}
+    <p>Please LOGIN to access this page</p>
+    <a href="{% url 'home'%}" class="btn btn-outline-secondary">Home</a>
+{%endif%}
+{%endblock%}

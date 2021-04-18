@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{% block content%}
+{% if user.is_authenticated%}
+    <h2>UPLOAD ASSIGNMENT</h2>
+    <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="card"style="background-color:transparent">
+                    <div class="card-body">
+                         <form method="POST" enctype="multipart/form-data">
+                            {%csrf_token%}
+
+                            {{form|crispy}}
+                            <button type="submit" class="btn btn-primary">Upload Assignment</button>
+                        </form>
+                     </div>
+                </div>
+            </div>
+       </div>
+	   
+	  <br>
+    <h2>UPLOADED ASSIGNMENTS</h2>
+
+     <table class="table ">
+         <thead>
+             <tr>
+                 <th>Assignment Code</th>
+                 <th>Grade</th>
+                 <th>Subject Name</th>
+                 <th>Description</th>
+                 <th>Content</th>
+                 <th>Delete</th>
+
+             </tr>
+         </thead>
+         <tbody>
+             {%for book in assignments %}
+             <tr>
+                 <td>{{book.Assignment_Code}}</td>
+                 <td>{{book.Grade}}</td>
+                 <td>{{book.Subject_Name}}</td>
+                 <td>{{book.Description}}</td>
+                 <td>
+                    <a href= "{{ book.Content.url }}" class="btn btn-primary btn-sm" target="_blank">Download File</a>
+                 </td>
+                 <td>
+                     <form method="post" action="{% url 'assignment_delete' book.pk %}">
+                         {%csrf_token%}
+                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                     </form>
+                 </td>
+             </tr>
+             {%endfor%}
+         </tbody>
+     </table>
+{%else%}
+    <p>Please LOGIN to access this page</p>
+    <a href="{% url 'home'%}" class="btn btn-outline-secondary">Home</a>
+{%endif%}
+{%endblock%}
